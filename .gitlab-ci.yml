@@ -1,0 +1,124 @@
+image: 10.16.88.132:5000/repository/openpass/maven:1.0
+
+stages:
+  - build
+  - package
+  - deploy
+
+cache:
+  untracked: true
+#
+maven-build:
+  stage: build
+  script:
+    - mvn -Dmaven.test.skip=true clean compile  --settings   ./settings.xml
+  tags:
+    - sit
+  except:
+    - sit
+    - develop
+maven-package:
+  stage: package
+  script:
+    - mvn -Dmaven.test.skip=true clean package  --settings   ./settings.xml deploy
+  artifacts:
+    untracked: true
+  tags:
+    - sit
+  only:
+    - sit
+
+maven-deploy:
+  stage: deploy
+  image: docker:18.09.7-dind
+  services:
+    - name: docker:18.09.7-dind
+      command: ["--insecure-registry=10.16.13.43"]
+  script:
+  - ls -l mall/target
+#  - ls
+#  - docker --version
+#  - docker ps
+#  - docker tag product:v1.0 10.16.13.43:80/tqls/product:v1.0
+  - docker build -t 10.16.13.43:80/tqls/mall:v1.0 . -f ./mall/mallDockerfile
+  - docker build -t 10.16.13.43:80/tqls/scrmwebadmin:v1.0 . -f ./scrm-webadmin/scrmwebadminDockerfile
+  - docker build -t 10.16.13.43:80/tqls/adapter:v1.0 . -f ./tqls-adapter/tqls-adapter-impl/adapterDockerfile
+  - docker build -t 10.16.13.43:80/tqls/act:v1.0 . -f ./tqls-ssc-act-center/tqls-act-center-impl/actDockerfile
+  - docker build -t 10.16.13.43:80/tqls/basedata:v1.0 . -f ./tqls-ssc-basedata-center/tqls-basedata-center-impl/basedataDockerfile
+  - docker build -t 10.16.13.43:80/tqls/bsp:v1.0 . -f ./tqls-ssc-bsp-center/tqls-bsp-center-impl/bspDockerfile
+  - docker build -t 10.16.13.43:80/tqls/cache:v1.0 . -f ./tqls-ssc-common-cache/tqls-common-cache-impl/cacheDockerfile
+  - docker build -t 10.16.13.43:80/tqls/export:v1.0 . -f ./tqls-ssc-export-center/tqls-export-center-impl/exportDockerfile
+  - docker build -t 10.16.13.43:80/tqls/mkt:v1.0 . -f ./tqls-ssc-mkt-center/tqls-mkt-center-impl/mktDockerfile
+  - docker build -t 10.16.13.43:80/tqls/msg:v1.0 . -f ./tqls-ssc-msg-center/tqls-msg-center-impl/msgDockerfile
+  - docker build -t 10.16.13.43:80/tqls/order:v1.0 . -f ./tqls-ssc-order-center/tqls-order-center-impl/orderDockerfile
+  - docker build -t 10.16.13.43:80/tqls/partner:v1.0 . -f ./tqls-ssc-partner-center/tqls-partner-center-impl/partnerDockerfile
+  - docker build -t 10.16.13.43:80/tqls/product:v1.0 . -f ./tqls-ssc-product-center/tqls-product-center-impl/productDockerfile
+  - docker build -t 10.16.13.43:80/tqls/user:v1.0 . -f ./tqls-ssc-user-center/tqls-user-center-impl/userDockerfile
+  - docker build -t 10.16.13.43:80/tqls/vip:v1.0 . -f ./tqls-ssc-vip-center/tqls-vip-center-impl/vipDockerfile
+  - docker build -t 10.16.13.43:80/tqls/wechat:v1.0 . -f ./tqls-ssc-wechat-center/tqls-wechat-center-impl/wechatDockerfile
+  - docker build -t 10.16.13.43:80/tqls/webadmin:v1.0 . -f ./tqls-webadmin/webadminDockerfile
+  - docker build -t 10.16.13.43:80/tqls/wxclient:v1.0 . -f ./wxclient/wxclientDockerfile
+# 登录镜像仓库
+#  - docker login 10.16.13.43:80 -u admin -p Harbor12345
+# 推镜像到镜像仓库
+#  - docker push 10.16.13.43:80/tqls/mall:v1.0
+#  - docker push 10.16.13.43:80/tqls/scrmwebadmin:v1.0
+#  - docker push 10.16.13.43:80/tqls/adapter:v1.0
+#  - docker push 10.16.13.43:80/tqls/act:v1.0
+#  - docker push 10.16.13.43:80/tqls/basedata:v1.0
+#  - docker push 10.16.13.43:80/tqls/bsp:v1.0
+#  - docker push 10.16.13.43:80/tqls/cache:v1.0
+#  - docker push 10.16.13.43:80/tqls/export:v1.0
+#  - docker push 10.16.13.43:80/tqls/mkt:v1.0
+#  - docker push 10.16.13.43:80/tqls/msg:v1.0
+#  - docker push 10.16.13.43:80/tqls/order:v1.0
+#  - docker push 10.16.13.43:80/tqls/partner:v1.0
+#  - docker push 10.16.13.43:80/tqls/product:v1.0
+#  - docker push 10.16.13.43:80/tqls/user:v1.0
+#  - docker push 10.16.13.43:80/tqls/vip:v1.0
+#  - docker push 10.16.13.43:80/tqls/wechat:v1.0
+#  - docker push 10.16.13.43:80/tqls/webadmin:v1.0
+#  - docker push 10.16.13.43:80/tqls/wxclient:v1.0
+# 打成war包
+#  - docker save -o /apps/tqls/wars/mall.war  10.16.13.43:80/tqls/mall:v1.0
+#  - docker save -o /apps/tqls/wars/scrmwebadmin.war  10.16.13.43:80/tqls/scrmwebadmin:v1.0
+#  - docker save -o /apps/tqls/wars/adapter.war  10.16.13.43:80/tqls/adapter:v1.0
+#  - docker save -o /apps/tqls/wars/act.war  10.16.13.43:80/tqls/act:v1.0
+#  - docker save -o /apps/tqls/wars/basedata.war  10.16.13.43:80/tqls/basedata:v1.0
+#  - docker save -o /apps/tqls/wars/bsp.war  10.16.13.43:80/tqls/bsp:v1.0
+#  - docker save -o /apps/tqls/wars/cache.war  10.16.13.43:80/tqls/cache:v1.0
+#  - docker save -o /apps/tqls/wars/export.war  10.16.13.43:80/tqls/export:v1.0
+#  - docker save -o /apps/tqls/wars/mkt.war  10.16.13.43:80/tqls/mkt:v1.0
+#  - docker save -o /apps/tqls/wars/msg.war  10.16.13.43:80/tqls/msg:v1.0
+#  - docker save -o /apps/tqls/wars/order.war  10.16.13.43:80/tqls/order:v1.0
+#  - docker save -o /apps/tqls/wars/partner.war  10.16.13.43:80/tqls/partner:v1.0
+#  - docker save -o /apps/tqls/wars/product.war  10.16.13.43:80/tqls/product:v1.0
+#  - docker save -o /apps/tqls/wars/user.war  10.16.13.43:80/tqls/user:v1.0
+#  - docker save -o /apps/tqls/wars/vip.war  10.16.13.43:80/tqls/vip:v1.0
+#  - docker save -o /apps/tqls/wars/wechat.war  10.16.13.43:80/tqls/wechat:v1.0
+#  - docker save -o /apps/tqls/wars/webadmin.war  10.16.13.43:80/tqls/webadmin:v1.0
+#  - docker save -o /apps/tqls/wars/wxclient.war  10.16.13.43:80/tqls/wxclient:v1.0
+# 删除镜像
+#  - docker rmi 10.16.13.43:80/tqls/mall:v1.0
+#  - docker rmi 10.16.13.43:80/tqls/scrmwebadmin:v1.0
+#  - docker rmi 10.16.13.43:80/tqls/adapter:v1.0
+#  - docker rmi 10.16.13.43:80/tqls/act:v1.0
+#  - docker rmi 10.16.13.43:80/tqls/basedata:v1.0
+#  - docker rmi 10.16.13.43:80/tqls/bsp:v1.0
+#  - docker rmi 10.16.13.43:80/tqls/cache:v1.0
+#  - docker rmi 10.16.13.43:80/tqls/export:v1.0
+#  - docker rmi 10.16.13.43:80/tqls/mkt:v1.0
+#  - docker rmi 10.16.13.43:80/tqls/msg:v1.0
+#  - docker rmi 10.16.13.43:80/tqls/order:v1.0
+#  - docker rmi 10.16.13.43:80/tqls/partner:v1.0
+#  - docker rmi 10.16.13.43:80/tqls/product:v1.0
+#  - docker rmi 10.16.13.43:80/tqls/user:v1.0
+#  - docker rmi 10.16.13.43:80/tqls/vip:v1.0
+#  - docker rmi 10.16.13.43:80/tqls/wechat:v1.0
+#  - docker rmi 10.16.13.43:80/tqls/webadmin:v1.0
+#  - docker rmi 10.16.13.43:80/tqls/wxclient:v1.0
+  - exit
+  tags:
+  - sit
+  only:
+  - sit

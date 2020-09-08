@@ -1,0 +1,17 @@
+version: '2.3'
+
+services:
+  mysql:
+    restart: always
+    image: mysql:5.7
+    container_name: mysql
+    command: --default-authentication-plugin=mysql_native_password #这行代码解决无法访问的问题
+    ports:
+      - 3306:3306
+    environment:
+      - "MYSQL_ROOT_PASSWORD=123456"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/hosts:/etc/hosts:ro
+      - ./mysql/data:/opt/mysql/mysql-5.7.26/data
+      - ./mysql/conf/my.cnf:/etc/mysql/my.cnf

@@ -1,0 +1,15 @@
+version: '2.3'
+
+services:
+  zookeeper:
+    restart: always
+    image: zookeeper:3.4.14
+    container_name: zookeeper
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/hosts:/etc/hosts:ro
+      - ./zookeeper/conf/zoo.cfg:/conf/zoo.cfg
+      - ./zookeeper/data:/data
+      - ./zookeeper/logs:/datalog
+    ports:
+      - 2181:2181

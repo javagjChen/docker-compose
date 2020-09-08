@@ -1,0 +1,13 @@
+version: '2.3'
+
+services:
+  canal-server:
+    image: canal/canal-server:v1.1.4
+    container_name: canal-server
+    ports:
+      - 11111:11111
+
+    volumes:
+      - ./canal-server/conf/tqls/:/home/admin/canal-server/conf/tqls/
+      - ./canal-server/conf/canal.properties:/home/admin/canal-server/conf/canal.properties
+      - ./canal-server/logs:/home/admin/canal-server/logs

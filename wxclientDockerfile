@@ -1,0 +1,9 @@
+FROM openjdk:8-jre-slim
+
+VOLUME /tmp
+
+ADD wxclient/target/wxclient.jar /root/wxclientApp.jar
+
+WORKDIR /root
+
+ENTRYPOINT ["java","-jar","/root/wxclientApp.jar"]

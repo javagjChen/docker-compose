@@ -1,0 +1,187 @@
+version: '2.3'
+services:
+  mall-service:
+    image: 10.16.13.43:80/tqls/mall:v1.0
+    volumes:
+      - /data/logs:/home/admin/logs
+      - /etc/localtime:/etc/localtime
+    environment:
+      - _JAVA_OPTIONS=-Xmx1024m -Xms1024m
+      - SPRING_PROFILES_ACTIVE=sit
+    restart: always
+    ports:
+      - 9092:9092
+  act-service:
+    image: 10.16.13.43:80/tqls/act:v1.0
+    volumes:
+      - /data/logs:/home/admin/logs
+      - /etc/localtime:/etc/localtime
+    environment:
+      - _JAVA_OPTIONS=-Xmx1024m -Xms1024m
+      - SPRING_PROFILES_ACTIVE=sit
+    restart: always
+    ports:
+      - 14047:14047
+  basedata-service:
+    image: 10.16.13.43:80/tqls/basedata:v1.0
+    volumes:
+      - /data/logs:/home/admin/logs
+      - /etc/localtime:/etc/localtime
+    environment:
+      - _JAVA_OPTIONS=-Xmx1024m -Xms1024m
+      - SPRING_PROFILES_ACTIVE=sit
+    restart: always
+    ports:
+      - 14042:14042
+  bsp-service:
+    image: 10.16.13.43:80/tqls/bsp:v1.0
+    volumes:
+      - /data/logs:/home/admin/logs
+      - /etc/localtime:/etc/localtime
+    environment:
+      - _JAVA_OPTIONS=-Xmx1024m -Xms1024m
+      - SPRING_PROFILES_ACTIVE=sit
+    restart: always
+    ports:
+      - 14078:14078
+  cache-service:
+    image: 10.16.13.43:80/tqls/cache:v1.0
+    volumes:
+      - /data/logs:/home/admin/logs
+      - /etc/localtime:/etc/localtime
+    environment:
+      - _JAVA_OPTIONS=-Xmx1024m -Xms1024m
+      - SPRING_PROFILES_ACTIVE=sit
+    restart: always
+  export-service:
+    image: 10.16.13.43:80/tqls/export:v1.0
+    volumes:
+      - /data/logs:/home/admin/logs
+      - /etc/localtime:/etc/localtime
+    environment:
+      - _JAVA_OPTIONS=-Xmx1024m -Xms1024m
+      - SPRING_PROFILES_ACTIVE=sit
+    restart: always
+    ports:
+      - 14043:14043
+  mkt-service:
+    image: 10.16.13.43:80/tqls/mkt:v1.0
+    volumes:
+      - /data/logs:/home/admin/logs
+      - /etc/localtime:/etc/localtime
+    environment:
+      - _JAVA_OPTIONS=-Xmx1024m -Xms1024m
+      - SPRING_PROFILES_ACTIVE=sit
+    restart: always
+    ports:
+      - 14051:14051
+  msg-service:
+    image: 10.16.13.43:80/tqls/msg:v1.0
+    volumes:
+      - /data/logs:/home/admin/logs
+      - /etc/localtime:/etc/localtime
+    environment:
+      - _JAVA_OPTIONS=-Xmx1024m -Xms1024m
+      - SPRING_PROFILES_ACTIVE=sit
+    restart: always
+    ports:
+      - 15048:15048
+  partner-service:
+    image: 10.16.13.43:80/tqls/partner:v1.0
+    volumes:
+      - /data/logs:/home/admin/logs
+      - /etc/localtime:/etc/localtime
+    environment:
+      - _JAVA_OPTIONS=-Xmx1024m -Xms1024m
+      - SPRING_PROFILES_ACTIVE=sit
+    restart: always
+    ports:
+      - 14062:14062
+  order-service:
+    image: 10.16.13.43:80/tqls/order:v1.0
+    volumes:
+      - /data/logs:/home/admin/logs
+      - /etc/localtime:/etc/localtime
+    environment:
+      - _JAVA_OPTIONS=-Xmx1024m -Xms1024m
+      - SPRING_PROFILES_ACTIVE=sit
+    restart: always
+    ports:
+      - 16048:16048
+  product-service:
+    image: 10.16.13.43:80/tqls/product:v1.0
+    volumes:
+      - /data/logs:/home/admin/logs
+      - /etc/localtime:/etc/localtime
+    environment:
+      - _JAVA_OPTIONS=-Xmx1024m -Xms1024m
+      - SPRING_PROFILES_ACTIVE=sit
+    restart: always
+    ports:
+      - 14050:14050
+  user-service:
+    image: 10.16.13.43:80/tqls/user:v1.0
+    volumes:
+      - /data/logs:/home/admin/logs
+      - /etc/localtime:/etc/localtime
+    environment:
+      - _JAVA_OPTIONS=-Xmx1024m -Xms1024m
+      - SPRING_PROFILES_ACTIVE=sit
+    restart: always
+    ports:
+      - 14046:14046
+  vip-service:
+    image: 10.16.13.43:80/tqls/vip:v1.0
+    volumes:
+      - /data/logs:/home/admin/logs
+      - /etc/localtime:/etc/localtime
+    environment:
+      - _JAVA_OPTIONS=-Xmx1024m -Xms1024m
+      - SPRING_PROFILES_ACTIVE=sit
+    restart: always
+    ports:
+      - 14048:14048
+  wechat-service:
+    image: 10.16.13.43:80/tqls/wechat:v1.0
+    volumes:
+      - /data/logs:/home/admin/logs
+      - /etc/localtime:/etc/localtime
+    environment:
+      - _JAVA_OPTIONS=-Xmx1024m -Xms1024m
+      - SPRING_PROFILES_ACTIVE=sit
+    restart: always
+    ports:
+      - 14041:14041
+  webadmin-service:
+    image: 10.16.13.43:80/tqls/webadmin:v1.0
+    volumes:
+      - /data/logs:/home/admin/logs
+      - /etc/localtime:/etc/localtime
+    environment:
+      - _JAVA_OPTIONS=-Xmx1024m -Xms1024m
+      - SPRING_PROFILES_ACTIVE=sit
+    restart: always
+    ports:
+      - 9090:9090
+  wxclient-service:
+    image: 10.16.13.43:80/tqls/wxclient:v1.0
+    volumes:
+      - /data/logs:/home/admin/logs
+      - /etc/localtime:/etc/localtime
+    environment:
+      - _JAVA_OPTIONS=-Xmx1024m -Xms1024m
+      - SPRING_PROFILES_ACTIVE=sit
+    restart: always
+    ports:
+      - 9091:9091
+  scrmwebadmin-service:
+    image: 10.16.13.43:80/tqls/scrmwebadmin:v1.0
+    volumes:
+      - /data/logs:/home/admin/logs
+      - /etc/localtime:/etc/localtime
+    environment:
+      - _JAVA_OPTIONS=-Xmx1024m -Xms1024m
+      - SPRING_PROFILES_ACTIVE=sit
+    restart: always
+    ports:
+      - 9094:9094
